@@ -1,23 +1,56 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Appointment from './Components/Appointment';
+import Popup from './Components/Popup';
+// import AppointmentForm from './Components/AppointmentForm';
+import AppointmentForm from './Components/AppointmentForm';
 import './App.css';
 
 function App() {
+  const [appointments, setAppointments] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [currentAppointment, setCurrentAppointment] = useState(null);
+
+  const addAppointment = (appointment) => {
+    setAppointments([...appointments, appointment]);
+    setShowPopup(false);
+  };
+
+  const deleteAppointment = (appointment) => {
+    setAppointments(appointments.filter(a => a !== appointment));
+  };
+
+  const editAppointment = (updatedAppointment) => {
+    setAppointments(appointments.map(a => (a === currentAppointment ? updatedAppointment : a)));
+    setShowPopup(false);
+    setCurrentAppointment(null);
+  };
+
+  const openPopup = (appointment = null) => {
+    setCurrentAppointment(appointment);
+    setShowPopup(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Appointment Management System</h1>
+      <button className="add-btn" onClick={() => openPopup()}>Add Appointment</button>
+      {appointments.map((appointment, index) => (
+        <Appointment 
+          key={index} 
+          appointment={appointment} 
+          deleteAppointment={deleteAppointment} 
+          openPopup={openPopup} 
+        />
+      ))}
+      {showPopup && (
+        <Popup onClose={() => setShowPopup(false)}>
+          <AppointmentForm 
+            addAppointment={addAppointment} 
+            editAppointment={editAppointment} 
+            currentAppointment={currentAppointment} 
+          />
+        </Popup>
+      )}
     </div>
   );
 }

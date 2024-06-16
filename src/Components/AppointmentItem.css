@@ -1,0 +1,30 @@
+/* src/components/AppointmentItem.css */
+.appointment-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .appointment-item h3 {
+    margin: 0;
+  }
+  
+  .appointment-item p {
+    margin: 5px 0;
+  }
+  
+  .appointment-item button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .appointment-item button:hover {
+    background-color: #e53935;
+  }
+  
